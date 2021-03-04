@@ -1,0 +1,20 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: mongo-ingress
+  annotations:
+    kubernetes.io/ingress.class: traefik
+spec:
+  rules:
+  - host: d6d6ea52-ca6f-459d-ad57-91c1b45dd815.k8s.civo.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: auth-mongo-srv
+            port:
+              number: 27017
+          # serviceName: auth-mongo-srv
+          # servicePort: 27017
