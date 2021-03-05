@@ -118,4 +118,4 @@ dist
 
 # End of https://www.toptal.com/developers/gitignore/api/node
 
-./infra/k8s/ingress/
+infra/k8s/ingress/
