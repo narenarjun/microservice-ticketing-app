@@ -1,0 +1,21 @@
+{
+  "name": "@wowowow/common",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./build/index.js",
+  "types": "./build/index.d.ts",
+  "files": [
+    "build/**/*"
+  ],
+  "scripts": {
+    "clean":"del ./build/*",
+    "build":"yarn clean && tsc"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "del-cli": "^3.0.1",
+    "typescript": "^4.2.3"
+  }
+}
