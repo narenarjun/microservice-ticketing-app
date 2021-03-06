@@ -7,8 +7,8 @@ const start = async () => {
     throw new Error("JWTSECRET must be defined");
   }
   try {
-    // ! this must be changed to use environment variable
-    await mongoose.connect("mongodb://auth-mongo-srv:27017/auth", {
+    // ! this must be changed to use environment variable 
+    await mongoose.connect("mongodb://tickets-mongo-srv:27017/tickets", {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       useCreateIndex: true,
@@ -17,8 +17,8 @@ const start = async () => {
   } catch (err) {
     console.error(err);
   }
-  app.listen(4000, () => {
-    console.log("Auth service listening on Port 4000!");
+  app.listen(4001, () => {
+    console.log("Auth service listening on Port 4001!");
   });
 };
 
