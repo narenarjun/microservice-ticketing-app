@@ -3,7 +3,8 @@ import "express-async-errors";
 import { json } from "body-parser";
 import cookieSession from "cookie-session";
 import cors from "cors";
-import { errorHandler, NotFoundError } from "@wowowow/common"
+import { errorHandler, NotFoundError, currentUser } from "@wowowow/common";
+import { createTicketRouter } from "./routes/new";
 
 const app = express();
 app.use(cors());
@@ -16,7 +17,9 @@ app.use(
   })
 );
 
+app.use(currentUser);
 
+app.use(createTicketRouter);
 
 app.all("*", async () => {
   throw new NotFoundError();
