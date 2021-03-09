@@ -12,6 +12,8 @@ declare global {
   }
 }
 
+jest.mock("../nats-wrapper.ts");
+
 let mongo: any;
 beforeAll(async () => {
   //! setting environment variable for jwtsecret for test environment
@@ -26,6 +28,7 @@ beforeAll(async () => {
 });
 
 beforeEach(async () => {
+  jest.clearAllMocks();
   const collections = await mongoose.connection.db.collections();
 
   for (let collection of collections) {
@@ -41,7 +44,7 @@ afterAll(async () => {
 global.signin = () => {
   // Build a JWT payload for tests. {id,email}
   const payload = {
-    id: new mongoose.Types.ObjectId().toHexString() ,
+    id: new mongoose.Types.ObjectId().toHexString(),
     email: "test@test.com",
   };
 
