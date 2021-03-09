@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import { OrderStatus } from "@wowowow/common";
+import { TicketDoc } from "./ticket";
 
 interface OrdersAttrs {
   userId: string;
