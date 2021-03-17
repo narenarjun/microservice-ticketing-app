@@ -778,10 +778,10 @@
   dependencies:
     "@types/yargs-parser" "*"
 
-"@wowowow/common@^1.0.8":
-  version "1.0.8"
-  resolved "https://registry.yarnpkg.com/@wowowow/common/-/common-1.0.8.tgz#138d34bab8a2daa03a5ffacf6b2f777c5473bb7f"
-  integrity sha512-sKfB8/9avmQI3MlV2zP4WDkO43QiCvYnX2aPzjMkvsgYNhjtcjaRTVi1C3lItPS7koY0d9rAT35TJxWUQTMDUw==
+"@wowowow/common@^1.0.9":
+  version "1.0.9"
+  resolved "https://registry.yarnpkg.com/@wowowow/common/-/common-1.0.9.tgz#fa8f12baea6e4d89ea5bc5d2c7a672935f7bac7c"
+  integrity sha512-UUZBhlT2xpnTta7sqyY3I80slsNe+1WxBiOm79sJSrCJyln3KOmi1dnz3cI0bCIJD5P5hlAl6aS35ETz9LK4PA==
   dependencies:
     "@types/cookie-session" "^2.0.42"
     "@types/express" "^4.17.11"
