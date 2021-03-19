@@ -12,7 +12,11 @@ const start = async () => {
   try {
     // ! values for the nats client must be extracted to be used via environment variables
     // ? nats client id (second value), will be great if we set it to the value of the pod name its running
-    await natsWrapper.connect("ticketing", "ljadasasafsafre1125", "http://nats-srv:4222");
+    await natsWrapper.connect(
+      "ticketing",
+      "ljadasasafsafre1125",
+      "http://nats-srv:4222"
+    );
 
     // ? Graceful shutdown for NATS streaming server
     natsWrapper.client.on("close", () => {
