@@ -38,7 +38,7 @@ const start = async () => {
     console.error(err);
   }
   app.listen(4001, () => {
-    console.log("Auth service listening on Port 4001!");
+    console.log("Ticket service listening on Port 4001!");
   });
 };
 

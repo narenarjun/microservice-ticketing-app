@@ -43,7 +43,7 @@ const start = async () => {
     console.error(err);
   }
   app.listen(4002, () => {
-    console.log("Auth service listening on Port 4002!");
+    console.log("Order service listening on Port 4002!");
   });
 };
 

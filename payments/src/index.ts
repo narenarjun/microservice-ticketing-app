@@ -1,5 +1,7 @@
 import mongoose from "mongoose";
 import { app } from "./app";
+import { OrderCancelledListener } from "./events/listeners/order-cancelled-listener";
+import { OrderCreatedListener } from "./events/listeners/order-created-listener";
 import { natsWrapper } from "./nats-wrapper";
 
 // mongoose connection
@@ -10,7 +12,7 @@ const start = async () => {
   try {
     // ! values for the nats client must be extracted to be used via environment variables
     // ? nats client id (second value), will be great if we set it to the value of the pod name its running
-    await natsWrapper.connect("ticketing", "ljadasas1125", "http://nats-srv:4222");
+    await natsWrapper.connect("ticketing", "ljadasasafsafre1125", "http://nats-srv:4222");
 
     // ? Graceful shutdown for NATS streaming server
     natsWrapper.client.on("close", () => {
@@ -20,6 +22,9 @@ const start = async () => {
 
     process.on("SIGINT", () => natsWrapper.client.close());
     process.on("SIGTERM", () => natsWrapper.client.close());
+
+    new OrderCreatedListener(natsWrapper.client).listen();
+    new OrderCancelledListener(natsWrapper.client).listen();
 
     // ! this must be changed to use environment variable
     await mongoose.connect("mongodb://payments-mongo-srv:27017/payments", {
@@ -32,7 +37,7 @@ const start = async () => {
     console.error(err);
   }
   app.listen(4004, () => {
-    console.log("Auth service listening on Port 4001!");
+    console.log("Payments service listening on Port 4004!");
   });
 };
 
