@@ -9,6 +9,7 @@ import {
 import express, { Request, Response } from "express";
 import { body } from "express-validator";
 import { Order } from "../models/orders";
+import { Payment } from "../models/payment";
 import { stripe } from "../stripe";
 
 const router = express.Router();
@@ -35,9 +36,9 @@ router.post(
       throw new BadRequestError("Cannot pay for an cancelled Order");
     }
 
-    // this shipping address and name can be changed to have reply on the customers info
+    //? this shipping address and name can be changed to have reply on the customers info
 
-    await stripe.charges.create({
+    const charge = await stripe.charges.create({
       currency: "usd",
       amount: order.price * 100,
       source: token,
@@ -53,6 +54,14 @@ router.post(
         },
       },
     });
+     
+    const payment = Payment.build({
+      orderId,
+      stripeId:charge.id
+    })
+
+    await payment.save();
+
 
     // ! As per Indian regulations, export transactions require a description, a customer name and address
     // await stripe.charges.create({
