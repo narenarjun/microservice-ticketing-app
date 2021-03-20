@@ -8,8 +8,10 @@ import {
 } from "@wowowow/common";
 import express, { Request, Response } from "express";
 import { body } from "express-validator";
+import { PaymentCreatedPublisher } from "../events/publishers/payment-created-publisher";
 import { Order } from "../models/orders";
 import { Payment } from "../models/payment";
+import { natsWrapper } from "../nats-wrapper";
 import { stripe } from "../stripe";
 
 const router = express.Router();
@@ -54,14 +56,19 @@ router.post(
         },
       },
     });
-     
+
     const payment = Payment.build({
       orderId,
-      stripeId:charge.id
-    })
+      stripeId: charge.id,
+    });
 
     await payment.save();
 
+    await new PaymentCreatedPublisher(natsWrapper.client).publish({
+      id: payment.id,
+      orderId: payment.orderId,
+      stripeId: payment.stripeId,
+    });
 
     // ! As per Indian regulations, export transactions require a description, a customer name and address
     // await stripe.charges.create({
@@ -81,7 +88,7 @@ router.post(
     //       },
     // })
 
-    res.status(201).send({ success: true });
+    res.status(201).send({ id: payment.id });
   }
 );
 
