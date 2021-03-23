@@ -8,7 +8,7 @@ interface Payload {
 
 const expirationQueue = new Queue<Payload>("order:expiration", {
   redis: {
-    host: "expiration-redis-srv",
+    host: process.env.REDIS_HOST,
   },
 });
 

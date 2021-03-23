@@ -1,14 +1,20 @@
 import mongoose from "mongoose";
 import { app } from "./app";
 
+// PORT value 
+const PORT = process.env.PORT || 4000;
+
 // mongoose connection
 const start = async () => {
   if (!process.env.JWTSECRET) {
     throw new Error("JWTSECRET must be defined");
   }
+  if (!process.env.AUTH_MONGO_DB_URI) {
+    throw new Error("AUTH_MONGO_DB_URI must be defined")
+  }
   try {
     // ! this must be changed to use environment variable
-    await mongoose.connect("mongodb://auth-mongo-srv:27017/auth", {
+    await mongoose.connect(process.env.AUTH_MONGO_DB_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       useCreateIndex: true,
@@ -17,8 +23,8 @@ const start = async () => {
   } catch (err) {
     console.error(err);
   }
-  app.listen(4000, () => {
-    console.log("Auth service listening on Port 4000!");
+  app.listen(PORT, () => {
+    console.log(`Auth service listening on Port ${PORT}!`);
   });
 };
 

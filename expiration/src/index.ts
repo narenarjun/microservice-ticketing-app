@@ -3,10 +3,26 @@ import { natsWrapper } from "./nats-wrapper";
 
 // mongoose connection
 const start = async () => {
+  if (!process.env.NATS_CLIENT_ID) {
+    throw new Error("NATS_CLIENT_ID must be defined");
+  }
+  if (!process.env.NATS_URL) {
+    throw new Error("NATS_URL must be defined");
+  }
+  if (!process.env.NATS_CLUSTER_ID) {
+    throw new Error("NATS_CLUSTER_ID must be defined");
+  }
+
+  if (!process.env.REDIS_HOST) {
+    throw new Error("REDIS_HOST must be defined")
+  }
+
   try {
-    // ! values for the nats client must be extracted to be used via environment variables
-    // ? nats client id (second value), will be great if we set it to the value of the pod name its running
-    await natsWrapper.connect("ticketing", "ljadas", "http://nats-srv:4222");
+    await natsWrapper.connect(
+      process.env.NATS_CLUSTER_ID,
+      process.env.NATS_CLIENT_ID,
+      process.env.NATS_URL
+    );
 
     // ? Graceful shutdown for NATS streaming server
     natsWrapper.client.on("close", () => {
